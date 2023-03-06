@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Automobiles
+{% endblock %}
+
+{% block body %}
+	<div class="container">
+		<h2 class="text-center mt-5 mb-3">Show Auto</h2>
+		<div class="card">
+			<div class="card-header">
+				<a class="btn btn-outline-info float-right" href="{{ path('app_automobiles_index') }}">
+					View All Auto
+				</a>
+			</div>
+			<div class="card-body">
+				<b class="text-muted">Brand:</b>
+				<p>{{ automobile.brand }}</p>
+				<b class="text-muted">Model:</b>
+				<p>{{ automobile.model }}</p>
+				<b class="text-muted">Year:</b>
+				<p>{{ automobile.year }}</p>
+				<b class="text-muted">0-100:</b>
+				<p>{{ automobile.to100InSec }}</p>
+			</div>
+			<a class="btn btn-outline-info float-right" href="{{ path('app_automobiles_edit', {'id': automobile.id}) }}">Edit</a>
+		</div>
+	</div>
+{% endblock %}
