@@ -14,50 +14,37 @@ use Symfony\Component\Routing\Annotation\Route;
 class AutomobilesController extends AbstractController
 {
     #[Route('/', name: 'app_automobiles_index', methods: ['GET'])]
-    public function index(Request $request, AutomobilesRepository $automobilesRepository): Response    {
-        $sort = $request->query->get('sort', 'brand_asc');
+public function index(Request $request, AutomobilesRepository $automobilesRepository): Response
+{
+    $sortField = $request->query->get('sortField', 'model');
+    $sortOrder = $request->query->get('sortOrder', 'ASC');
+    
 
-        switch ($sort) {
-            case 'brand_desc':
-                $sortField = 'brand';
-                $sortOrder = 'DESC';
-                break;
-                case 'model_asc':
-                    $sortField = 'model';
-                    $sortOrder = 'ASC';
-                    break;
-                case 'model_desc':
-                    $sortField = 'model';
-                    $sortOrder = 'DESC';
-                    break;
-            case 'year_asc':
-                $sortField = 'year';
-                $sortOrder = 'ASC';
-                break;
-            case 'year_desc':
-                $sortField = 'year';
-                $sortOrder = 'DESC';
-                break;
-            case 'to100InSec_asc':
-                    $sortField = 'to_100_in_sec';
-                    $sortOrder = 'ASC';
-                    break;
-            case 'to100InSec_desc':
-                    $sortField = 'to100InSec';
-                    $sortOrder = 'DESC';
-                    break;
-            default:
-                $sortField = 'brand';
-                $sortOrder = 'ASC';
-        }
-    
-        $automobiles = $automobilesRepository->findBy([], [$sortField => $sortOrder]);
-    
-        return $this->render('automobiles/index.html.twig', [
-            'automobiles' => $automobiles,
-            'sort' => $sort,
-        ]);
+    switch ($sortField) {
+        case 'brand':
+            $sortField = 'brand';
+            break;
+        case 'model':
+            $sortField = 'model';
+            break;
+        case 'year':
+            $sortField = 'year';
+            break;
+        case 'to100InSec':
+            $sortField = 'to_100_in_sec';
+            break;
+        default:
+            $sortField = 'brand';
     }
+
+    $automobiles = $automobilesRepository->findBy([], [$sortField => $sortOrder]);
+
+    return $this->render('automobiles/index.html.twig', [
+        'automobiles' => $automobiles,
+        'sortField' => $sortField,
+        'sortOrder' => $sortOrder,
+    ]);
+}
 
     #[Route('/new', name: 'app_automobiles_new', methods: ['GET', 'POST'])]
     public function new(Request $request, AutomobilesRepository $automobilesRepository): Response

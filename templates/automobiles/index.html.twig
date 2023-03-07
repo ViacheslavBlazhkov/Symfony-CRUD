@@ -13,38 +13,49 @@
 				</a>
 			</div>
 			<div class="card-body">
-				<table class="table table-bordered">
-					<tr>
-						<th><a href="{{ path('app_automobiles_index', {'sort': 'brand_asc'}) }}">Brand</a></th>
-						<th><a href="{{ path('app_automobiles_index', {'sort': 'model_asc'}) }}">Model</a></th>
-						<th><a href="{{ path('app_automobiles_index', {'sort': 'year_asc'}) }}">Year</a></th>
-						<th><a href="{{ path('app_automobiles_index', {'sort': 'to100InSec_asc'}) }}">0-100</a></th>
-						<th width="240px">Action</th>
-					</tr>
-					{% for auto in automobiles %}
+				{% if automobiles is defined %}
+					<table class="table table-bordered">
 						<tr>
-							<td>{{ auto.brand }}</td>
-							<td>{{ auto.model }}</td>
-							<td>{{ auto.year }}</td>
-							<td>{{ auto.to100InSec }}s</td>
-							<td>
-								<form method="post" action="{{ path('app_automobiles_delete', {'id': auto.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
-									<a class="btn btn-outline-info" href="{{ path('app_automobiles_show', {'id': auto.id}) }}">
-										Show
-									</a>
-									<a class="btn btn-outline-success" href="{{ path('app_automobiles_edit', {'id': auto.id}) }}">
-										Edit
-									</a>
-
-									<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ auto.id) }}">
-									<button class="btn btn-outline-danger">Delete</button>
-								</form>
-							</td>
+							<th>
+								<a href="{{ path('app_automobiles_index', {'sortField': 'brand', 'sortOrder': sortField == 'brand' and sortOrder == 'ASC' ? 'DESC' : 'ASC'}) }}">Brand</a>
+							</th>
+							<th>
+								<a href="{{ path('app_automobiles_index', {'sortField': 'model', 'sortOrder': sortField == 'model' and sortOrder == 'ASC' ? 'DESC' : 'ASC'}) }}">Model</a>
+							</th>
+							<th>
+								<a href="{{ path('app_automobiles_index', {'sortField': 'year', 'sortOrder': sortField == 'year' and sortOrder == 'ASC' ? 'DESC' : 'ASC'}) }}">Year</a>
+							</th>
+							<th>
+								<a href="{{ path('app_automobiles_index', {'sortField': 'to100InSec', 'sortOrder': sortField == 'to_100_in_sec' and sortOrder == 'ASC' ? 'DESC' : 'ASC'}) }}">0-100</a>
+							</th>
+							<th width="240px">Action</th>
 						</tr>
-					{% endfor %}
-				</table>
+						{% for auto in automobiles %}
+							<tr>
+								<td>{{ auto.brand }}</td>
+								<td>{{ auto.model }}</td>
+								<td>{{ auto.year }}</td>
+								<td>{{ auto.to100InSec }}s</td>
+								<td>
+									<form method="post" action="{{ path('app_automobiles_delete', {'id': auto.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+										<a class="btn btn-outline-info" href="{{ path('app_automobiles_show', {'id': auto.id}) }}">
+											Show
+										</a>
+										<a class="btn btn-outline-success" href="{{ path('app_automobiles_edit', {'id': auto.id}) }}">
+											Edit
+										</a>
+
+										<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ auto.id) }}">
+										<button class="btn btn-outline-danger">Delete</button>
+									</form>
+								</td>
+							</tr>
+						{% endfor %}
+					</table>
+				{% else %}
+					<p>No automobiles found.</p>
+				{% endif %}
 			</div>
 		</div>
 	</div>
-
 {% endblock %}
