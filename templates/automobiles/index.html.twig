@@ -15,10 +15,10 @@
 			<div class="card-body">
 				<table class="table table-bordered">
 					<tr>
-						<th>Brand</th>
-						<th>Model</th>
-						<th>Year</th>
-						<th>0-100</th>
+						<th><a href="{{ path('app_automobiles_index', {'sort': 'brand_asc'}) }}">Brand</a></th>
+						<th><a href="{{ path('app_automobiles_index', {'sort': 'model_asc'}) }}">Model</a></th>
+						<th><a href="{{ path('app_automobiles_index', {'sort': 'year_asc'}) }}">Year</a></th>
+						<th><a href="{{ path('app_automobiles_index', {'sort': 'to100InSec_asc'}) }}">0-100</a></th>
 						<th width="240px">Action</th>
 					</tr>
 					{% for auto in automobiles %}
